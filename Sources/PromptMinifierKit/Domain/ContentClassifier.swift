@@ -298,8 +298,8 @@ public struct ContentClassifier: Sendable {
         }
 
         // Import/use statements.
-        if text.range(of: #"^import\s+"#, options: [.regularExpression, .anchorsMatchLines]) != nil { score += 0.15 }
-        if text.range(of: #"^use\s+"#, options: [.regularExpression, .anchorsMatchLines]) != nil { score += 0.10 }
+        if text.range(of: #"(?m)^import\s+"#, options: .regularExpression) != nil { score += 0.15 }
+        if text.range(of: #"(?m)^use\s+"#, options: .regularExpression) != nil { score += 0.10 }
 
         // Class/struct/enum.
         if text.range(of: #"\b(class|struct|enum|interface|protocol)\s+\w+"#, options: .regularExpression) != nil { score += 0.20 }

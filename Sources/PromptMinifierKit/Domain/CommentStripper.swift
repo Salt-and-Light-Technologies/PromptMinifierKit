@@ -494,7 +494,7 @@ public struct CommentStripper: Sendable {
     // MARK: - Ruby
 
     private func stripRuby(_ text: String, language: CodeLanguage) -> CommentStripResult {
-        var lines = text.components(separatedBy: "\n")
+        let lines = text.components(separatedBy: "\n")
         var result: [String] = []
         var inEmbeddedDoc = false
         var didStrip = false
@@ -525,7 +525,6 @@ public struct CommentStripper: Sendable {
             if stripped { didStrip = true }
             result.append(resultLine)
         }
-        _ = lines // suppress warning
 
         let rules: [AppliedRule] = didStrip ? [AppliedRule(rule: .strippedComments,
             description: "Stripped Ruby # and =begin/=end comments.",
