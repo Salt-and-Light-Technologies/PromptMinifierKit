@@ -96,7 +96,7 @@ public struct MinificationOptions: Codable, Sendable, Hashable {
         removeTrailingWhitespace: Bool = true,
         collapseRepeatedSpaces: Bool = true,
         collapseBlankLines: Bool = true,
-        maxConsecutiveBlankLines: Int = 1,
+        maxConsecutiveBlankLines: Int = 0,
         stripComments: Bool = false,
         preserveIndentation: Bool = true,
         compactBraces: Bool = false,
@@ -149,14 +149,14 @@ public struct MinificationOptions: Codable, Sendable, Hashable {
         processingMode: .readable,
         collapseRepeatedSpaces: false,
         collapseBlankLines: true,
-        maxConsecutiveBlankLines: 2,
+        maxConsecutiveBlankLines: 0,
         compactJSON: false
     )
 
     /// Aggressive: opt-in heavy compaction (always review warnings).
     public static let aggressiveDefaults = MinificationOptions(
         processingMode: .aggressive,
-        maxConsecutiveBlankLines: 1,
+        maxConsecutiveBlankLines: 0,
         compactBraces: true,
         allowAggressiveProseCompaction: true,
         allowCodeCommentStripping: true

@@ -143,11 +143,17 @@ public final class MinificationEngine: Sendable {
         }
 
         // Assemble output text.
+        // Trim trailing newlines from each block before joining so block boundaries
+        // never introduce blank lines, regardless of what individual minifiers returned.
         let outputText: String
         if blockResults.count == 1 {
             outputText = blockResults[0].minifiedText
+                .trimmingCharacters(in: .newlines)
         } else {
-            outputText = blockResults.map(\.minifiedText).joined(separator: "\n")
+            outputText = blockResults
+                .map { $0.minifiedText.trimmingCharacters(in: .newlines) }
+                .filter { !$0.isEmpty }
+                .joined(separator: "\n")
         }
 
         // ── Stage 5: Validation ───────────────────────────────────────────────
@@ -256,7 +262,10 @@ public final class MinificationEngine: Sendable {
         allWarnings.append(contentsOf: packResult.warnings)
         allRules.append(contentsOf: packResult.appliedRules)
 
-        let outputText = blockResults.map(\.minifiedText).joined(separator: "\n")
+        let outputText = blockResults
+            .map { $0.minifiedText.trimmingCharacters(in: .newlines) }
+            .filter { !$0.isEmpty }
+            .joined(separator: "\n")
 
         let validationWarnings = try validator.validate(
             input: combined,

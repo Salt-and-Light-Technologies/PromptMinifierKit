@@ -55,13 +55,12 @@ public struct YAMLMinifier: Sendable {
 
         // 2. Collapse excessive blank lines conservatively (max 1 in YAML).
         if options.collapseBlankLines {
-            let effectiveMax = min(options.maxConsecutiveBlankLines, 1)
             let before = text
-            text = collapseBlankLines(text, max: effectiveMax)
+            text = collapseBlankLines(text, max: options.maxConsecutiveBlankLines)
             if text != before {
                 appliedRules.append(AppliedRule(
                     rule: .collapsedBlankLines,
-                    description: "Collapsed consecutive blank lines in YAML (conservative, max 1).",
+                    description: "Collapsed consecutive blank lines in YAML.",
                     contentType: .yaml
                 ))
             }
